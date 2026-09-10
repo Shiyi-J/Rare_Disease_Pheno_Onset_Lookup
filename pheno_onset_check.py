@@ -89,8 +89,8 @@ else:
                 pheno_list = pickle.load(f)
             df_raw = df_raw[df_raw['HPO_id'].isin(pheno_list)]
             # proceed
-            #df_raw = df_raw.loc[df_raw['show_online'], ['HPO_id', 'aggregated_median', 'aggregated_q1', 'aggregated_q3']]
-            df_raw = df_raw[['HPO_id', 'aggregated_median', 'aggregated_q1', 'aggregated_q3']]
+            df_raw = df_raw.loc[df_raw['show_online'], ['HPO_id', 'aggregated_median', 'aggregated_q1', 'aggregated_q3']]
+            #df_raw = df_raw[['HPO_id', 'aggregated_median', 'aggregated_q1', 'aggregated_q3']]
             df_raw['Median Onset Age'] = np.round(df_raw['aggregated_median'] / 365, 1)
             df_raw['Q1 Onset Age'] = np.round(df_raw['aggregated_q1'] / 365, 1)
             df_raw['Q3 Onset Age'] = np.round(df_raw['aggregated_q3'] / 365, 1)
@@ -99,6 +99,8 @@ else:
             df_merge = df_raw.merge(df_ref, how='left', left_on='HPO_id', right_on='concept_code')
             df = df_merge[['concept_name', 'HPO_id', 'Median Onset Age', 'Interquartile Range of Onset Age']].copy()
             df = df.rename(columns={'concept_name':'Phenotype Name', 'HPO_id':'HPO Identifier'})
+            if len(df) == 0:
+                print('No onset times found for the associated phenotypes in clinical narratives.')
 
             st.divider()
             st.subheader(selected_option)
