@@ -99,11 +99,11 @@ else:
             df_merge = df_raw.merge(df_ref, how='left', left_on='HPO_id', right_on='concept_code')
             df = df_merge[['concept_name', 'HPO_id', 'Median Onset Age', 'Interquartile Range of Onset Age']].copy()
             df = df.rename(columns={'concept_name':'Phenotype Name', 'HPO_id':'HPO Identifier'})
-            if len(df) == 0:
-                print('No onset times found for the associated phenotypes in clinical narratives.')
 
             st.divider()
             st.subheader(selected_option)
             st.dataframe(df, width='stretch', hide_index=True)
+            if len(df) == 0:
+                st.warning('No onset times found for the associated phenotypes in clinical narratives.')
         except Exception as e:
             st.error(f"Unable to read {selected_file.name}: {e}")
