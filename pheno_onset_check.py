@@ -89,8 +89,8 @@ else:
                 pheno_list = pickle.load(f)
             df_raw = df_raw[df_raw['HPO_id'].isin(pheno_list)]
             # proceed
-            df_raw = df_raw.loc[df_raw['show_online'], ['HPO_id', 'aggregated_median', 'aggregated_q1', 'aggregated_q3']]
-            #df_raw = df_raw[['HPO_id', 'aggregated_median', 'aggregated_q1', 'aggregated_q3']]
+            #df_raw = df_raw.loc[df_raw['show_online'], ['HPO_id', 'aggregated_median', 'aggregated_q1', 'aggregated_q3']]
+            df_raw = df_raw[['HPO_id', 'aggregated_median', 'aggregated_q1', 'aggregated_q3']]
             df_raw['Median Onset Age'] = np.round(df_raw['aggregated_median'] / 365, 1)
             df_raw['Q1 Onset Age'] = np.round(df_raw['aggregated_q1'] / 365, 1)
             df_raw['Q3 Onset Age'] = np.round(df_raw['aggregated_q3'] / 365, 1)
